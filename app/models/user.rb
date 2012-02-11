@@ -102,7 +102,14 @@ class User < ActiveRecord::Base
     def staff
       where( "NOT role='USER' ")
     end
-  
+
+    def build_admin_user(params)
+      user          = User.new( params )
+      user.role     = "ADMIN"
+      user.enabled  = true
+      user.verified = true
+      user
+    end
   end
   
   
