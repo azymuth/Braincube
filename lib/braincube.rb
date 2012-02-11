@@ -15,7 +15,7 @@ module Braincube
   require "will_paginate"
   require "paperclip"
   require "tickle"
-  require "sunspot_rails"
+  #require "sunspot_rails"
   
   # Load Braincube library files
   require "core_extensions"

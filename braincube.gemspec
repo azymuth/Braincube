@@ -1068,7 +1068,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<zip>, ["= 2.0.2"])
       s.add_runtime_dependency(%q<chronic>, ["= 0.3.0"])
       s.add_runtime_dependency(%q<tickle>, ["= 0.1.7"])
-      s.add_runtime_dependency(%q<sunspot_rails>, [">= 0"])
+      #s.add_runtime_dependency(%q<sunspot_rails>, [">= 0"])
       s.add_runtime_dependency(%q<paper_trail>, ["= 2.0.1"])
       s.add_runtime_dependency(%q<will_paginate>, ["= 3.0.pre2"])
       s.add_runtime_dependency(%q<mime-types>, ["= 1.16"])
