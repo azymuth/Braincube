@@ -79,10 +79,20 @@ module Braincube
       unless !options[:popular]
         tag_list = "<h3>Most popular tags</h3>"
         tag_list << "<div class=\"tag_attachment_list\">"
-        tag_list << Tag::popular.joins(:taggings).group("tags.id").order("COUNT(taggings.id) DESC").limit(50).map do |tag|
+        #tag_list << Tag::popular.joins(:taggings).group("tags.id").order("COUNT(taggings.id) DESC").limit(50).map do |tag|
+        #  tag_attachment_link( tag )
+        tag_list << Tag.limit(50).map do |tag|
           tag_attachment_link( tag )
         end.compact.join
         tag_list << "</div>"
+
+
+
+
+
+
+
+
         output += tag_list.html_safe
         
       end

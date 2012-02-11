@@ -1,3 +1,4 @@
+require 'htmlentities'
 class Admin::ArticlesController < AdminController
     
   before_filter :get_article, :only => [:edit, :update, :destroy, :unpublish, :check_lock, :revert_draft]

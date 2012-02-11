@@ -1,3 +1,5 @@
+require 'htmlentities'
+
 module Admin::EventsHelper
 	
 	

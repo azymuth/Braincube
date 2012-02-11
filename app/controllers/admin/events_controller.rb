@@ -1,3 +1,5 @@
+require 'htmlentities'
+
 class Admin::EventsController < AdminController
 	
 	# Define controller subsections
