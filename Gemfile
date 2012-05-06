@@ -36,7 +36,7 @@ group :development do
   gem "mongrel_experimental"
   gem "dr_dre"
   gem "ruby-debug"
-  gem "jeweler",      "1.5.2"  
+  #gem "jeweler"
 end
   
 # Testing only
