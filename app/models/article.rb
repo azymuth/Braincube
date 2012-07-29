@@ -1,5 +1,9 @@
 class Article < ActiveRecord::Base
   
+  is_impressionable
+  include PgSearch
+  multisearchable :against => [:title, :content]
+  
   # Model definition
   ############################################################################
 
