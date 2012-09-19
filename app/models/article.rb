@@ -91,7 +91,9 @@ class Article < ActiveRecord::Base
                   :footnote, :web_address, :featured, :print_only, :template,
                   :article_type, :section, :private_notes, :publication, 
                   :review, :review_rating, :starts_at, :ends_at, :writer_string, 
-                  :publication_id, :associated_event_ids, :associated_venue_ids, :tag_list, :asset_ids
+                  :publication_id, :associated_event_ids, :associated_venue_ids, :tag_list, :asset_ids,
+                  :city_tag_id, :section_tag_id, :subsection_tag_id, :channel_tag_id
+  
     
   # Callbacks
   before_save :save_word_count

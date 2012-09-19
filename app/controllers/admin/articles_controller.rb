@@ -24,8 +24,12 @@ class Admin::ArticlesController < AdminController
 
     # Filters
     @articles = @articles.where(:publication_id => params[:publication_id]) if ( params[:publication_id]  && @publication = Publication.find(params[:publication_id]) )
-    @articles = @articles.where(:section_id => params[:section_id]) if ( params[:section_id] && @section = Section.find(params[:section_id]) )
-    @articles = @articles.where(["articles.title LIKE ? OR cached_authors LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%"]) if !params[:q].blank?
+    #@articles = @articles.where(:section_id => params[:section_id]) if ( params[:section_id] && @section = Section.find(params[:section_id]) )
+    #@articles = @articles.where(["articles.title LIKE ? OR cached_authors LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%"]) if !params[:q].blank?
+    
+    @articles = @articles.where(:city_tag_id => params[:city_tag_id]) if ( params[:city_tag_id] && Tag.find(params[:city_tag_id]))
+    @articles = @articles.where(:section_tag_id => params[:section_tag_id]) if ( params[:section_tag_id] && Tag.find(params[:section_tag_id]))
+    
     
     @articles = @articles.order("updated_at DESC").includes(:assets).includes(:drafts).includes(:lock).paginate(:page => params[:page], :per_page => Braincube::Config::AdminPaginationLimit)
     

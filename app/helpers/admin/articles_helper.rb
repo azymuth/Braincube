@@ -217,20 +217,45 @@ module Admin::ArticlesHelper
   end
   
   def section_options_for_list(selected=nil)
-    out = @all_sections.map do |section|
+    sections = Section.where(:section_type => 'section').joins(:tag)
+    out = sections.map do |section|
+      tag = section.tag
       content_tag( 
         :option, 
-        section.name, 
+        tag.name, 
         :value => url_for( 
-          :section_id => section.id, 
+          :section_tag_id => tag.id, 
           :publication_id => params[:publication_id],
+          :city_tag_id => params[:city_tag_id],
           :q => params[:q]
         ), 
-        :selected => ( section.id == params[:section_id].to_i )
+        :selected => ( tag.id == params[:section_tag_id].to_i )
       )
     end
     out = out.unshift(
-      content_tag( :option, "--All sections--", :value => url_for(:section_id=>nil, :publication_id => params[:publication_id], :q => params[:q]) )
+      content_tag( :option, "--All sections--", :value => url_for(:section_id=>nil, :publication_id => params[:publication_id], :city_tag_id => params[:city_tag_id], :q => params[:q]) )
+    )
+    out.join.html_safe
+  end
+
+  def city_options_for_list(selected=nil)
+    sections = Section.where(:section_type => 'city').joins(:tag)
+    out = sections.map do |section|
+      tag = section.tag
+      content_tag( 
+        :option, 
+        tag.name, 
+        :value => url_for( 
+          :city_tag_id => tag.id, 
+          :section_tag_id => params[:section_tag_id],
+          :publication_id => params[:publication_id],
+          :q => params[:q]
+        ), 
+        :selected => ( tag.id == params[:city_tag_id].to_i )
+      )
+    end
+    out = out.unshift(
+      content_tag( :option, "--All sections--", :value => url_for(:section_tag_id=>params[:section_tag_id], :publication_id => params[:publication_id], :city_tag_id => nil, :q => params[:q]) )
     )
     out.join.html_safe
   end
@@ -243,7 +268,8 @@ module Admin::ArticlesHelper
           v.name, 
           :value => url_for(
             :publication_id => v.id, 
-            :section_id => params[:section_id],
+            :section_tag_id => params[:section_tag_id],
+            :city_tag_id => params[:city_tag_id],
             :q => params[:q]
           ), 
           :selected => ( v.id == params[:publication_id].to_i ) 
@@ -255,7 +281,7 @@ module Admin::ArticlesHelper
       content_tag( 
         :option, 
         "--All publications--", 
-        :value => url_for(:publication_id=>nil, :section_id => params[:section_id], :q => params[:q])
+        :value => url_for(:publication_id=>nil, :city_tag_id => params[:city_tag_id], :section_tag_id => params[:section_tag_id], :q => params[:q])
       )
     )
     out.join.html_safe

@@ -8,8 +8,8 @@ braincube.admin.articles = {
 
 	// Initialise the article manager JS
 	init: function(){
-		this.setup_publication_filter();			// Setup the publication filter
-		this.setup_section_filter();					// Setup the section filter
+		this.setup_article_filters();			// Setup the publication filter
+    //this.setup_section_filter();					// Setup the section filter
 		this.setup_article_type_chooser();		// Setup the article type widget
 		this.setup_title_updater();						// Auto-update page title from form
 		this.setup_show_links();							// Setup listings links to tools
@@ -20,8 +20,8 @@ braincube.admin.articles = {
 	
 	// Changes the location to the value of the select box when the publication
 	// selector is changed on the listings page
-	setup_publication_filter: function(){
-		$("#publication_id").live( "change", function(){ window.location = $(this).val(); } );
+	setup_article_filters: function(){
+		$(".article-filters select").live( "change", function(){ window.location = $(this).val(); } );
 	},
 	
 	// Changes the location to the value of the select box when the section

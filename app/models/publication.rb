@@ -6,6 +6,7 @@ class Publication < ActiveRecord::Base
   # Relationships
   has_many :articles
   
+  belongs_to :city_tag, :class_name => 'Tag'
   # Validations
   validates_presence_of :name, :date_street, :date_deadline
   
