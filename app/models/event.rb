@@ -59,6 +59,10 @@ class Event < ActiveRecord::Base
 		next_performance_time
 	end
 	
+	
+	# Callbacks
+	after_save :update_performance_caches
+	
   # Class methods
   ############################################################################
   
@@ -178,14 +182,21 @@ class Event < ActiveRecord::Base
   
   
   
-  # Venue - if there are multiple venues, say that. Otherwise return the venue
-  # name and the city name combined.
-  def venue_string(city=true)
-    venues = performances.upcoming.map(&:venue_id).uniq
+  # Venue details
+  def venue_string( city = nil )
+    
+    if city
+      venues = performances.upcoming.includes(:venue).where("venues.city_id=?", city.id).map(&:venue_id).uniq
+    else
+      venues = performances.upcoming.map(&:venue_id).uniq
+    end
+    
     if venues.length==1 
       v = Venue.find( venues.first )
-      return [v.title, ((v.city ? v.city.name : nil) if city)].compact.join(", ")
-    else 
+      return [v.title, ((v.city ? nil : v.city.name ) if city)].compact.join(", ")
+    elsif venues.empty?
+      return "No venue"
+    else
       return "various venues"
     end
   end
@@ -307,6 +318,7 @@ class Event < ActiveRecord::Base
     
   end
   
+
   private
   
   # Formats a number into a price with precision 2
@@ -314,5 +326,12 @@ class Event < ActiveRecord::Base
     return "free" if number.to_f==0.to_f
     "£%01.2f" % ((Float(number.to_f) * (10 ** 2)).round.to_f / 10 ** 2)
   end
-  
+
+  def update_performance_caches
+		performances.reject(&:destroyed?).each do |p|
+			p.skip_event_cache_update = true
+			p.save
+		end
+	end
+	
 end
