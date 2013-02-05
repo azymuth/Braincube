@@ -15,7 +15,7 @@ gem "tickle",       "0.1.7"
 gem "paper_trail",  "2.0.1"
 gem "will_paginate", "3.0.pre2"
 gem "compass",      ">=0.12"
-gem "sass",         "~>3.2.0.alpha"
+# gem "sass",         "~>3.2.0.alpha"
 
 # Need to require the correct name
 gem "mime-types",   "1.16", :require => "mime/types"
