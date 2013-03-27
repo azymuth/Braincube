@@ -25,4 +25,10 @@ class Author < ActiveRecord::Base
     user_id ? user.name : name
   end
   
+  def to_url
+    id = self.id
+    pretty = Braincube::Util::pretty_url(self.name)
+    return id.to_s + "-" + pretty
+  end
+  
 end

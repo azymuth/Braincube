@@ -68,28 +68,13 @@ class Braincube::Config
   
   # Asset uploading
   ############################################################################
-  AssetStorageMethod = :s3
-  AssetMaxUploadSize = 4.megabytes
+  AssetStorageMethod = :filesystem
+  AssetMaxUploadSize = 20.megabytes
   AssetContentTypes = [
     "image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif",
     "application/pdf", "application/msword", "application/vnd.ms-excel",
     "application/zip"
   ]
-  S3AssetBucketName = {
-    'development' => 'thejournal-us',
-    'production' => 'thejournal-us'
-  } 
-
-  S3ConnectionDetails = {
-    'development' => {
-      :access_key_id => 'AKIAIKKPSJ2PZ5OPYGLA',
-      :secret_access_key => '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'
-    },
-    'production' => {
-      :access_key_id => 'AKIAIKKPSJ2PZ5OPYGLA',
-      :secret_access_key => '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'
-    }
-  }
   
   
   # Admin menus
