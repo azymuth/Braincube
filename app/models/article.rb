@@ -1,7 +1,7 @@
 class Article < ActiveRecord::Base
   is_impressionable
   include PgSearch
-  multisearchable :against => [:title, :content, :tags]
+  
   
   # Model definition
   ############################################################################
@@ -99,7 +99,7 @@ class Article < ActiveRecord::Base
   before_validation :set_starts_at
 
   
-  # Search
+  # Sunspot Search
   searchable :auto_index => true, :auto_remove => true do
     text :title, :default_boost => 5
 		text :stripped_title, :default_boost => 5
@@ -111,6 +111,17 @@ class Article < ActiveRecord::Base
 	def search_time
 		starts_at || created_at
 	end
+	
+  ## PG_Search
+  
+  multisearchable :against => [:title, :content, :tag_list],
+                  :if => :live?
+  pg_search_scope :tags_search,
+                  :against => :cached_tags,
+                  :using => {
+                                :tsearch => {:any_word => true}
+                            }
+                
   
   # Special method generation for ratings
   Braincube::Config::ArticleTypes.each_pair do |k,v|

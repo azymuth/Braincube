@@ -10,7 +10,7 @@ gem "htmlentities", "4.2.2"
 gem "zip",          "2.0.2"
 gem "chronic",      "0.3.0"
 gem "tickle",       "0.1.7"
-#gem "sunspot_rails"
+gem "sunspot_rails"
 
 gem "paper_trail",  "2.0.1"
 gem "will_paginate", "3.0.pre2"
@@ -55,4 +55,5 @@ end
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
   gem "jammit"
+  gem 'sunspot_solr'
 end
