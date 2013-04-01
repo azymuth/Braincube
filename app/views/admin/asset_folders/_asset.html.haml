@@ -1,6 +1,6 @@
 .icon{:class=>"#{asset.asset_type} #{cycle(:first, "", "", "", :last)}"}
 	- if asset.asset_type == :image
-		=image_tag( asset.asset.url(:thumb) )
+		=image_tag( asset.asset.url(:square_medium) )
 	- else
 		.icon_area= asset.asset_type
 	.label
