@@ -1060,7 +1060,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rails>, ["= 3.0.19"])
+      s.add_runtime_dependency(%q<rails>, ["= 3.0.9"])
       s.add_runtime_dependency(%q<haml>, ["= 3.1.2"])
       s.add_runtime_dependency(%q<sass>, ["= 3.1.2"])
       s.add_runtime_dependency(%q<fastercsv>, ["= 1.5.3"])
