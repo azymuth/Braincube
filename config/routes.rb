@@ -125,7 +125,7 @@ Rails.application.routes.draw do
   
   # Default admin error page for nonexistent routes
   match "admin/*path" => "admin#display_404"
-   
+
    
   ############################################################################
   # API section
