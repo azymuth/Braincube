@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
   
   # Constants
-  AuthMethods = { :hash => "Hash", :salted_hash => "SaltedHash" }
-  Roles = ["USER", "WRITER", "EDITOR", "SUBEDITOR", "PUBLISHER", "ADMIN"]
+  AuthMethods = { :google_oauth2 => "google_oauth2", :facebook => "facebook", :hash => "Hash", :salted_hash => "SaltedHash" }
+  Roles = ["USER", "WRITER", "EDITOR", "SUBEDITOR", "PUBLISHER", "ADMIN", "READER"]
   
   # Export handlers
   braincube_set_export_columns(
@@ -48,17 +48,19 @@ class User < ActiveRecord::Base
   validates :email,         :uniqueness => true, :presence => true, :format => { :with=>Braincube::Config::EmailRegexp }
   validates :auth_method,   :presence => true, :inclusion=>{ :in => User::AuthMethods.values }
   validates :role,          :presence => true, :inclusion => { :in => User::Roles }
-  validates :password_salt, :presence => true, :unless=> Proc.new{ auth_method == User::AuthMethods[:hash] }
+  validates :password_salt, :presence => true, :unless=> Proc.new{ auth_method == User::AuthMethods[:hash] or User::AuthMethods[:facebook] or User::AuthMethods[:google_oauth2]}
   validates :password,      :confirmation => true, :length => { :in=>5..40 }, :if => :password_changed?
   validates :terms,         :acceptance => true
   
-  validates_presence_of :password_hash, :verification_key 
+  validates_presence_of :password_hash, :unless => Proc.new{ auth_method == User::AuthMethods[:facebook] or auth_method == User::AuthMethods[:google_oauth2]}
+  validates_presence_of :verification_key
                         
   # Virtual attributes
   attr_accessor :password, :password_confirmation, :terms, :no_welcome_email
   attr_accessible :email, :enabled, :verified, :name, :phone, :position,
                   :country, :postcode, :date_of_birth, :profile, :mailing_list,
-                  :password, :password_confirmation
+                  :password, :password_confirmation, :provider, :uid,
+                  :oauth_token, :oauth_expires_at
   
   # Callbacks
   before_validation :generate_verification_key, :on => :create
@@ -80,11 +82,11 @@ class User < ActiveRecord::Base
   class << self
   
     def salted_hash(pass, salt)
-       Digest::SHA1.hexdigest( pass + salt )
+      Digest::SHA1.hexdigest( pass + salt )
     end
 
     def unsalted_hash(pass)
-       Digest::SHA1.hexdigest( pass )
+      Digest::SHA1.hexdigest( pass )
     end
       
     # Returns nil if user does not exist or credentials are invalid
@@ -110,13 +112,16 @@ class User < ActiveRecord::Base
       user.verified = true
       user
     end
+
+
+  
   end
   
   
 
   # Instance methods
   ############################################################################
-  
+
   def to_param
     id.to_s + "-" + Braincube::Util::pretty_url( name || "Anonymous user" )
   end
@@ -157,4 +162,3 @@ class User < ActiveRecord::Base
   end
   
 end
-
