@@ -64,6 +64,11 @@ class Article < ActiveRecord::Base
     cached_authors
   end
   
+  # Cached_tags
+
+  before_save :build_tags
+
+  
   # Event and venue attachment
   attr_accessor :associated_event_ids
   attr_accessor :associated_venue_ids
@@ -215,7 +220,7 @@ class Article < ActiveRecord::Base
   
   def stripped_title
 		return title.gsub(/[^(\w|\s)]/i, "")
-	end
+  end
 	
   def queue
     case status
@@ -318,6 +323,25 @@ class Article < ActiveRecord::Base
 
     @writer_string = nil
     save!
+  end
+  
+  def build_tags
+    cached_tags_string = ""
+    if self.tags != []
+      if self.tags.count == 1
+        cached_tags_string += self.tags[0].name
+      elsif self.tags.count == 2
+        cached_tags_string += self.tags[0].name + ", " + self.tags[1].name
+      else
+        self.tags[0..-2].each do |tag|
+          if tag.name != nil
+            cached_tags_string += tag.name + ", "
+          end
+        end
+        cached_tags_string += self.tags[-1].name
+      end                     
+    end
+    self.cached_tags = cached_tags_string if cached_tags_string != ""
   end
   
   # Word count
