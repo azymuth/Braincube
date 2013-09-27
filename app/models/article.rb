@@ -103,7 +103,7 @@ class Article < ActiveRecord::Base
   before_save :save_word_count
   before_validation :update_review_rating
   before_validation :set_starts_at
-
+  before_save :set_view_count
   
   # Sunspot Search
   searchable :auto_index => true, :auto_remove => true do
@@ -305,6 +305,7 @@ class Article < ActiveRecord::Base
   ############################################################################
 
   private
+ 
     
   def build_authors
     return if @writer_string.nil?
@@ -358,6 +359,10 @@ class Article < ActiveRecord::Base
     if status == Status[:published] && !starts_at
       self[:starts_at] = Time::now
     end
+  end
+  
+  def set_view_count
+    self.view_count = 0 if self.view_count == nil
   end
 end
 
