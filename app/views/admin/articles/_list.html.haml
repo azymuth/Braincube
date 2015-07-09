@@ -1,0 +1,26 @@
+- if articles.empty? && !params[:page]
+	%tr
+		%td.empty{:colspan => 5}
+			No items found
+			
+- articles.each	do |article|
+	%tr{:class=>cycle(:even, :odd)}
+		%td
+			%strong
+				= link_to article.title, edit_admin_article_path( article )
+				- if article.has_draft?
+					%span.label draft
+				= admin_review_stars(article)
+			%span.extra
+				= article.cached_authors
+		%td
+			= print_time article.updated_at
+			- if ["index", "download"].include?(controller.action_name)
+				%span.extra
+					= [article.queue, (article.publication.name if article.publication), article.section.name].compact.join(", ")
+		%td.center
+			= article.word_count
+		%td.center
+			= article.assets.length
+		%td.action_icons.nowrap
+			= article_action_links( article )

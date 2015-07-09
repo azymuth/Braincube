@@ -1,0 +1,15 @@
+= form_tag admin_login_path do 
+	%fieldset.login.script
+		%legend Log in
+		.field
+			= label_tag "email"
+			= text_field_tag :email, params[:email]
+		.field
+			= label_tag "password"
+			= password_field_tag :password, params[:password]
+		.field.buttons
+			= hidden_field_tag :next_page, @next_page
+			= submit_tag "Log in", :class => :button
+			
+.noscript
+	You need Javascript enabled to use this tool.

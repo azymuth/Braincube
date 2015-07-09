@@ -1,0 +1,70 @@
+//****************************************************************************
+// Main menu
+//***************************************************************************/
+
+ul#main_navigation
+
+	position: absolute
+	overflow: hidden
+	bottom: 0
+	font-size: 13px
+
+	li
+		float: left
+		a
+			display: block
+			padding: 8px 20px 8px 20px
+			margin-right: 0.7em
+			color: #fff
+			text-decoration: none !important
+			background: mix($highlight_1, black, 70%)
+			font-weight: bold
+			
+			&:hover
+				background: mix($highlight_1, black, 80%)
+				color: white
+				text-decoration: none
+				
+
+		&.active a
+			background: #eee
+			color: #222
+
+
+
+
+//****************************************************************************
+// Lower menu
+//***************************************************************************/
+			
+#sub_navigation_wrapper
+
+	background: #eee
+	padding-top: 5px
+	+adjust-font-size-to(11px,1)
+	overflow: hidden
+	
+	ul#sub_navigation
+		@extend .container_12
+		overflow: hidden
+		
+		li
+			float: left
+			a
+				display: block
+				padding: 5px 20px 10px 20px
+				text-decoration: none  !important
+				font-weight: bold
+				color: #222
+				
+				&:hover
+					text-decoration: none
+					background: #ddd
+					color: #222
+					z-index: 5
+					
+			&.active a
+				background: white
+				color: #222
+				z-index: 5
+				position: relative

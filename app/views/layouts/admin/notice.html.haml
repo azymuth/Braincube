@@ -1,0 +1,13 @@
+- content_for :wrapper do
+
+	%body.notice
+		%section#main_notice
+			%h1= Braincube::Config::SiteTitle
+			= flash_message
+			= yield
+			
+		.version
+			Braincube v#{Braincube::Version} // <a href="http://www.braincube.co.uk" target="_blank">www.braincube.co.uk</a>
+	
+				
+= render :partial => "layouts/admin/parts/head"
