@@ -2,12 +2,17 @@
 .full= f.text_field :title, :required => true, :maxlength => 255, :note => "This will be the main title of the article"
 .full= f.text_field :writer_string,	:note => "Separate user names with commas. Leave empty to publish an anonymous article", :label => "Authors"
 .full
+<<<<<<< HEAD
+	.half= f.select :publication_id, publication_options(@article.publication||""), :note => "Choose the publication this article will appear in", :class=>:half
+	.half= f.select :section_id, [""]+Section::all.map{|s| [s.name, s.id] }, :required => true, :note => "Choose the main section for this article"
+=======
 	.half= f.select :city_tag_id, [""]+Section.city_options_for_select, :required => true, :note => "Choose the main section for this article"
 	.half= f.select :publication_id, publication_options(@article.publication), :note => "Choose the publication this article will appear in", :class=>:half
 	.half= f.select :section_tag_id, [""]+Section.section_options_for_select, :required => true, :note => "Choose the main section for this article"
 	.half= f.select :subsection_tag_id, [""]+Section.subsection_options_for_select, :required => true, :note => "Choose subsection for this article"
 	.half= f.select :channel_tag_id, [""]+Section.channel_options_for_select, :required => true, :note => "Choose channel for this article"
 
+>>>>>>> 0cfdfcc825343de1ee4bc63d7630120b4387f9e1
 .full.bottom
 	.half
 		= f.select :article_type, article_type_options(@article.article_type), :note => "Choose the type of article to fill in additional details", :class=>:half, :required => true

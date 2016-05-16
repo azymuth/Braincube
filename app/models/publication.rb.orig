@@ -24,8 +24,12 @@ class Publication < ActiveRecord::Base
     date_deadline < Date::today ? :past : :future
   end
   
+<<<<<<< HEAD
   def to_param
      "#{id}-#{Braincube::Util.pretty_url(name)}"
   end
   
 end
+=======
+end
+>>>>>>> 0cfdfcc825343de1ee4bc63d7630120b4387f9e1

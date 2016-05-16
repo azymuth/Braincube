@@ -4,6 +4,15 @@
       No publications found
       
 - publications.each do |publication|
+<<<<<<< HEAD
+	%tr{ :class => cycle(:even, :odd) }
+		%td= link_to publication.name, edit_admin_publication_path( publication )
+		%td= publication.date_street.strftime("%A %d %B %Y") if publication.date_street
+		%td= publication.date_deadline.strftime("%A %d %B %Y") if publication.date_deadline
+		%td= City.find(publication.city_tag_id).name if publication.city_tag_id  
+		%td= publication.issuu_url if publication.issuu_url   
+		%td.destroy= delete_link "Delete publication", admin_publication_path(publication.id)
+=======
   %tr{ :class => cycle(:even, :odd) }
     %td
       = link_to publication.name, edit_admin_publication_path( publication )
@@ -11,3 +20,4 @@
     %td= publication.date_street.strftime("%A %d %B %Y") if publication.date_street
     %td= publication.date_deadline.strftime("%A %d %B %Y") if publication.date_deadline
     %td.destroy= delete_link "Delete publication", admin_publication_path(publication.id)
+>>>>>>> 0cfdfcc825343de1ee4bc63d7630120b4387f9e1

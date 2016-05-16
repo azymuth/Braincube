@@ -1,0 +1,21 @@
+=form_errors @publication
+-@main_form = f
+
+.tabbed_fieldsets
+
+	%ul.tabs
+		%li
+			%h2= link_to "Publication information", "#basic"
+	
+	%fieldset#basic
+		%legend Publication information
+		.full= f.text_field :name, :required => true, :note => "Name of this publication."
+		.half= f.text_field :date_street, :required => true, :note => "Street date.", :class => :date
+		.half= f.text_field :date_deadline, :required => true, :note => "Publication date.", :class => :date
+<<<<<<< HEAD
+		.half= f.select :city_tag_id, [""]+City::all.map{|s| [s.name, s.id] }, :required => true, :note => "City", :class => :half
+		.half= f.text_field :issuu_url, :required => false, :note => "Issuu url, please omit initial /", :class => :date
+=======
+
+		.half= f.select :city_tag_id, [""]+Section.city_options_for_select, :required => true, :note => "Choose the city for this publication"
+>>>>>>> 0cfdfcc825343de1ee4bc63d7630120b4387f9e1
